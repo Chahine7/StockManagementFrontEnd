@@ -1,0 +1,40 @@
+<mat-progress-bar mode="query"></mat-progress-bar>
+<br>
+
+<div class="pagetitle">
+  <h1>Products</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
+      <li class="breadcrumb-item active">Edit Products</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+  <form [formGroup]="editProductForm" (ngSubmit)="editProduct()">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{product.designation}}</mat-card-title>
+        <mat-card-subtitle>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{product.productImage}}" alt="{{product.designation}}">
+      <mat-card-content>
+        <p>
+          {{product.unitPrice | currency: 'USD'}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-radio-group aria-label="Select an option" formControlName="available">
+          <mat-radio-button [value]="true">Yes</mat-radio-button>
+          <mat-radio-button [value]="false">No</mat-radio-button>
+        </mat-radio-group>
+        <br>
+        <mat-form-field>
+          <mat-label>Stock Quantity</mat-label>
+          <input matInput type="number" placeholder="{{product.stockQuantity}}" formControlName="stockQuantity" required>
+        </mat-form-field>
+      </mat-card-actions>
+    </mat-card>
+    <button mat-raised-button color="accent" [disabled]="!editProductForm.valid">Edit Product</button>
+  </form>

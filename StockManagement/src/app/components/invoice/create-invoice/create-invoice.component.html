@@ -1,0 +1,80 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+<div class="pagetitle">
+  <h1>Invoices</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/invoice">Invoice</a></li>
+      <li class="breadcrumb-item active">Create Invoice</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+<mat-card>
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+<div formGroupName="customer" class="col-md-6">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Customer</mat-label>
+    <mat-select formControlName="id" (selectionChange)="selectCustomer($event.value)">
+      <mat-option  *ngFor="let c of listOfCustomers"  [value]="c.id">
+        <a  mat-button color="primary">{{c.designation}}</a>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div >
+
+    <img *ngIf="customer.id" src="{{customer.customerImage}}" style="width: 150px; height: 150px" alt="{{customer.designation}}" />
+   </div>
+  <br>
+  <a mat-raised-button color="warn" (click)="openModal()">Add Product</a>
+  <div *ngIf="cartItems.length > 0">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef> Designation </th>
+        <td mat-cell *matCellDef="let element"> {{element.designation}} </td>
+        <td mat-footer-cell *matFooterCellDef> <b>Total</b> </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="productImage">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let element"><img src="{{element.productImage}}" style="width: 150px; height: 100px" alt="{{element.designation}}"/></td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="stockQuantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-icon-button matTooltip="Decrement Quantity" (click)="decrementQuantity(element)">
+            <mat-icon color="warn">remove_circle</mat-icon>
+          </a>
+          {{element.stockQuantity}} <button matTooltip="Increment Quantity" type="button" mat-icon-button (click)="incrementQuantity(element)" [disabled]="element.stockQuantity == element.qty">
+          <mat-icon color="primary" [ngClass]="{'disable':element.stockQuantity == element.qty}">add_circle</mat-icon>
+        </button>
+
+          <a (click)="remove(element)" mat-icon-button>
+            <mat-icon matTooltip="Delete Product" color="accent">delete</mat-icon></a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Subtotal">
+        <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+        <td mat-cell *matCellDef="let element"><b>{{element.stockQuantity * element.unitPrice | currency: 'USD'}}</b></td>
+        <td mat-footer-cell *matFooterCellDef> <b class="float-end">Total Price: {{totalPrice | currency:'USD'}} <button mat-stroked-button color="accent" style="margin-left: 30px">Create</button></b></td>
+
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="footerColumns; sticky: true"></tr>
+
+    </table>
+
+
+  </div>
+  <!-- if cart is empty then display message -->
+  <div *ngIf="cartItems.length == 0" class="alert alert-danger col-md-12" role="alert">
+    Your shopping cart is empty.
+  </div>
+</form>
+
+</mat-card>

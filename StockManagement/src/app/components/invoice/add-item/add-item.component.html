@@ -1,0 +1,21 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+<mat-card>
+  <form>
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Product Name</mat-label>
+        <mat-select >
+          <mat-option *ngFor="let p of allProducts" (onSelectionChange)="getProduct(p.id)" [value]="p.id">
+            {{p.designation}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <img src="{{product?.productImage}}"  alt="{{product?.designation}}"/>
+      <br>
+      <br>
+    </div>
+    <br>
+    <button mat-raised-button color="accent" (click)="addItem(product)">Add Product</button>
+  </form>
+</mat-card>

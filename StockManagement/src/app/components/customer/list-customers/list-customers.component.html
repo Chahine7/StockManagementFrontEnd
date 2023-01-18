@@ -1,0 +1,70 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+<div class="pagetitle">
+  <h1>Customers</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/customers">Customers</a></li>
+      <li class="breadcrumb-item active">List Customers</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+<app-list-countries></app-list-countries>
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+      <!--Loop over the collection of products -->
+      <div class="col-md-3" *ngFor="let c of customers">
+        <mat-card class="example-card">
+          <mat-card-header>
+
+            <div class="product-tumb">
+              <img mat-card-image src="{{c.customerImage}}" alt="{{c.designation}}">
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-card-title>{{c.designation}}</mat-card-title>
+
+            <mat-card-subtitle>
+              <mat-chip
+                        selected color="primary">{{c.email}}</mat-chip>
+            </mat-card-subtitle>
+            <hr>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button><mat-icon color="warn" (click)="openDeleteDialog(c.id)">delete</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+
+      </div>
+
+      <!-- if products empty -->
+      <div *ngIf="customers?.length ==0" class="alert alert-danger col-md-12" role="alert">
+        No Customer found.
+      </div>
+  </div>
+  <br>
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-9" style="padding-left: 30%">
+
+                <ngb-pagination [(page)]="thePageNumber"
+                                [pageSize]="thePageSize"
+                                [collectionSize]="theTotalElements"
+                                [maxSize]="5"
+                                [boundaryLinks]="true"
+                                (pageChange)="listCustomers()">
+
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

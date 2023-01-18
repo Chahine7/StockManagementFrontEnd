@@ -1,0 +1,43 @@
+.mat-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px;
+}
+.badge {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  background: cornflowerblue;
+  color: #fff;
+  padding: 3px 10px;
+}
+.mat-card-actions {
+  text-align: right;
+}
+.mat-card-actions button mat-icon{
+  display: inline-block;
+  margin-left: 5px;
+  color: #050505;
+  transition: 0.3s;
+  font-size: 17px;
+}
+.mat-card-actions button mat-icon:hover {
+  color: red;
+}
+/deep/ .pagination .page-item .page-link {
+  border-radius: 2px !important;
+}
+
+/deep/ .pagination .page-link {
+  border-top-style: none !important;
+  border-bottom-style: none !important;
+  background-color: #f6f6f6 !important;
+  color: black !important;
+}

@@ -1,0 +1,82 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+<div class="pagetitle">
+  <h1>Products</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
+      <li class="breadcrumb-item active">List Products</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+<app-list-category></app-list-category>
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+        <!--Loop over the collection of products -->
+        <div class="col-md-3" *ngFor="let p of products">
+          <!--<div class="product-box">
+            <a routerLink="/products/{{p.id}}">
+              <img src="{{p.productImage}}" alt="" class="img-responsive"></a>
+            <a routerLink="/products/{{p.id}}">
+              <h1>{{p.designation}}</h1></a>
+            <div class="price">{{p.unitPrice | currency: 'USD'}}</div>
+          </div>-->
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div class="badge">In Stock</div>
+              <div class="product-tumb">
+                <img mat-card-image src="{{p.productImage}}" alt="{{p.designation}}">
+              </div>
+            </mat-card-header>
+
+            <mat-card-content>
+              <mat-card-title>{{p.designation}}</mat-card-title>
+
+              <mat-card-subtitle>
+                <mat-chip *ngIf="p.available;else notAvailable"
+                          selected color="primary">Available</mat-chip>
+                <ng-template #notAvailable><mat-chip selected color="warn" class="example-box" style="background-color: green">Not Available</mat-chip></ng-template>
+              </mat-card-subtitle>
+              <hr>
+              <div class="product-bottom-details">
+                <div class="product-price">
+                  <b>{{p.unitPrice |currency: 'USD'}}</b>
+                </div>
+              </div>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button matTooltip="Remove Product"><mat-icon color="warn" (click)="openDeleteDialog(p.id)">delete</mat-icon></button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+
+        <!-- if products empty -->
+        <div *ngIf="products?.length ==0" class="alert alert-danger col-md-12" role="alert">
+          No products found.
+        </div>
+      </div>
+      <br>
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-9" style="padding-left: 30%">
+
+                <ngb-pagination [(page)]="thePageNumber"
+                                [pageSize]="thePageSize"
+                                [collectionSize]="theTotalElements"
+                                [maxSize]="5"
+                                [boundaryLinks]="true"
+                                (pageChange)="listProducts()">
+
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

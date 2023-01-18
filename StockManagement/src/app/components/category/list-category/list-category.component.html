@@ -1,0 +1,10 @@
+
+<mat-form-field appearance="fill">
+  <mat-label>Select Category</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let c of categories" [value]="c.id">
+      <a routerLink="/category/{{c.id}}" mat-button color="primary">{{c.designation}}</a>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+

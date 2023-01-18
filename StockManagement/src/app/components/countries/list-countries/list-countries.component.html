@@ -1,0 +1,11 @@
+
+<mat-form-field appearance="fill">
+  <mat-label>Select By Country</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let c of countries" [value]="c.id">
+      <a routerLink="/country/{{c.id}}" mat-button color="primary">{{c.designation}}</a>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+

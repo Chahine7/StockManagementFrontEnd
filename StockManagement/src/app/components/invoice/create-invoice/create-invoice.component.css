@@ -1,0 +1,30 @@
+.example-container{
+  margin-left: 40%;
+}
+.mat-card{
+  background-color: whitesmoke;
+}
+table {
+   width: 100%;
+ }
+.mat-header-cell:not(:first-child) {
+  padding-left: 0;
+}
+.mat-header-cell span {
+  font-weight: 600;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.5px;
+}
+
+.mat-header-cell:first-child {
+
+  border-top-left-radius: 5px;
+}
+.mat-header-cell:last-child {
+  border-top-right-radius: 5px;
+}
+
+.mat-header-row {
+  height: 3em;
+}

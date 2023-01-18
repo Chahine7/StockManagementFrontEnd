@@ -1,0 +1,55 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+<div class="pagetitle">
+  <h1>customers</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/customers">customers</a></li>
+      <li class="breadcrumb-item active">Create customers</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+<mat-card>
+  <form [formGroup]="addCustomerForm" (ngSubmit)="addCustomer()">
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter customer Name</mat-label>
+        <input type="text" matInput placeholder="Customer Name" formControlName="designation" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter customer Identifier</mat-label>
+        <input type="text" matInput placeholder="Customer Identifier" formControlName="identifier" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter customer numTel</mat-label>
+        <input type="text" matInput placeholder="Customer Telephone Number" formControlName="numTel" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter customer Email</mat-label>
+        <input type="text" matInput placeholder="Customer Telephone Email" formControlName="email" required>
+      </mat-form-field>
+      <br>
+           <br>
+      customer Image
+      <label for="img" class="mat-button"><mat-icon ngxMatFileInputIcon>folder</mat-icon></label>
+      <input
+        id="img" type="file" accept="image/*"  style="display: none" (change)="onSelectFile($event)">
+      <br>
+
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>customer Country</mat-label>
+        <mat-select formControlName="country_id">
+          <mat-option *ngFor="let c of countries" [value]="c.id">
+            {{c.designation}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <br>
+    <button mat-raised-button color="accent" [disabled]="!addCustomerForm.valid">Add customer</button>
+  </form>
+</mat-card>
+

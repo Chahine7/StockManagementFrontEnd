@@ -1,0 +1,52 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+<div class="pagetitle">
+  <h1>Products</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
+      <li class="breadcrumb-item active">Create Products</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+<mat-card>
+<form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Product Name</mat-label>
+      <input type="text" matInput placeholder="Product Name" formControlName="designation" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Product Stock Quantity</mat-label>
+      <input matInput type="number" placeholder="Stock Quantity" formControlName="stockQuantity" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Product Unit Price</mat-label>
+      <input matInput type="number" placeholder="Product Unit Price" formControlName="unitPrice" required>
+
+    </mat-form-field>
+    <br>
+    Product Image
+    <label for="img" class="mat-button"><mat-icon ngxMatFileInputIcon>folder</mat-icon></label>
+        <input
+         id="img" type="file" accept="image/*"  style="display: none" (change)="onSelectFile($event)">
+    <br>
+    <mat-radio-group aria-label="Select an option" formControlName="available">
+      <mat-radio-button  [value]="true">Yes</mat-radio-button>
+      <mat-radio-button  [value]="false">No</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Product Category</mat-label>
+      <mat-select formControlName="category_id">
+        <mat-option *ngFor="let c of productCategories" [value]="c.id">
+          {{c.designation}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <br>
+<button mat-raised-button color="accent" [disabled]="!addProductForm.valid">Add Product</button>
+</form>
+</mat-card>

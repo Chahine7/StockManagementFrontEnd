@@ -1,0 +1,110 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+
+<div class="col-md-4 text-right">
+  <button mat-icon-button (click)="openPDF()"><mat-icon matTooltip="PDF Export" color="warn">picture_as_pdf</mat-icon></button>
+</div>
+<div id="data">
+<h1>Order {{order.orderTrackingNumber}}</h1>
+<div class="row">
+  <div class="col-md-8">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h2>Customer details</h2>
+      <p>
+        <strong>Name: </strong> {{customer.designation}}
+      </p>
+      <p>
+        <strong>Email: </strong>
+        <a href="mailto:{{customer.email}}">{{customer.email}}</a>
+      </p>
+      <p>
+
+        <strong>Country: </strong> {{country.designation}}
+      </p>
+    </li>
+    <li class="list-group-item">
+      <h2>Order Items</h2>
+      <ul class="list-group">
+        <li class="list-group-item" key={index} *ngFor="let item of orderItems">
+          <div class="row">
+            <div class="col-md-3">
+              <img
+                src="{{item.productImage}}"
+                alt="{{item.designation}}"
+                class="rounded"
+              />
+            </div>
+            <div class="md-4">
+              {{item.stockQuantity}} x {{item.unitPrice |currency:'USD'}} = {{item.stockQuantity * item.unitPrice|currency:'USD'}}
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item" *ngIf="order.status; else notPaid">
+          <p class="text-success">Paid on {{order.paidAt  | date:'yyyy-mm-dd HH:mm:ss'}}</p>
+        </li>
+        <ng-template #notPaid><b><p class="text-danger">Not Paid</p></b></ng-template>
+      </ul>
+      <!--{order.orderItems.length === 0 ? (
+                <Message>Order is empty</Message>
+              ) : (
+                <ListGroup variant='flush'>
+
+      {order.orderItems.map((item, index) => (
+      <li key={index}>
+        <div class="row">
+          <div class="col-md-1">
+          <img
+            src={item.image}
+            alt={item.name}
+            fluid
+            rounded
+          />
+          </div>
+          <div>
+          <a routerLink="/product/${item.product">
+          {item.name}
+          </a>
+          </div>
+          <div class="md-4">
+          {item.qty} x ${item.price} = ${item.qty * item.price}
+          </div>
+        </div>
+      </li>
+      ))}
+
+    )}-->
+
+  </ul>
+  </div>
+  <div class="col-md-4">
+  <mat-card>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h2>Order Summary</h2>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">Quantity</div>
+          <div class="col">{{order.totalQuantity}}</div>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">Total</div>
+          <div class="row">{{order.totalPrice}}</div>
+        </div>
+      </li>
+
+    </ul>
+  </mat-card>
+    <hr>
+    <button id="pay" [disabled]="order.status" mat-stroked-button matTooltip="Pay Invoice" (click)="pay(order.id)" color="accent"><i class="material-icons">payment</i></button>
+    <button id="convert" mat-stroked-button (click)="convert()" color="warn" matTooltip="Currency Exchange"><i class="material-icons">currency_exchange</i></button>
+    <button id="go-back" mat-stroked-button (click)="goBack()" color="primary" matTooltip="Go Back"><i class="material-icons">keyboard_backspace</i></button>
+  </div>
+  </div>
+</div>
+
+
+

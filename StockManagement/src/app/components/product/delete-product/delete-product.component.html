@@ -1,0 +1,11 @@
+<mat-progress-bar mode="query" *ngIf="loaderService.isLoading | async"></mat-progress-bar>
+
+<mat-card style="background-color: whitesmoke">
+  <mat-card-header>
+    Are you sure you want to delete product {{product.designation}}
+  </mat-card-header>
+  <mat-card-actions>
+    <button mat-icon-button (click)="deleteProduct(product.id)" matTooltip="Delete Me!" color="warn"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button (click)="closeDialog()" matTooltip="Cancel " color="primary"><mat-icon>cancel</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
